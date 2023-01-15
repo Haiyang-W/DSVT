@@ -1,11 +1,10 @@
-# DSVT
+# DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 	
 <!-- [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-pedestrian)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-pedestrian?p=embracing-single-stride-3d-object-detector)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-cyclist)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-cyclist?p=embracing-single-stride-3d-object-detector)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-vehicle)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-vehicle?p=embracing-single-stride-3d-object-detector) -->
 
-This is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](www.google.com). Our DSVT achieves state-of-
-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
+This is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](www.google.com). Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
 
 ![Pipeline](assets/Figure3_sc.png)
 
