@@ -7,7 +7,7 @@
 This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](www.google.com) as well as the follow-ups. Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
 
 <div align="center">
-  <img src="assets/Figure2.png" width="400"/>
+  <img src="assets/Figure2.png" width="500"/>
 </div>
 
 ## News
