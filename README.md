@@ -80,4 +80,4 @@ Please consider citing our work as follows if it is helpful.
 ## Acknowledgments
 This project is based on the following codebases.
 * [OpenPCDet](https://github.com/open-mmlab/OpenPCDet)
-* [SST3D](https://github.com/tusen-ai/SST)
+* [SST](https://github.com/tusen-ai/SST)
