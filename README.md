@@ -79,7 +79,7 @@ Please consider citing our work as follows if it is helpful.
 @article{wang2023dsvt,
     title={DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets},
     author={Haiyang Wang, Chen Shi, Shaoshuai Shi, Meng Lei, Sen Wang, Di He, Bernt Schiele and Liwei Wang},
-    journal={arXiv preprint arXiv:2207.10589},
+    journal={arXiv preprint arXiv:2301.06051},
     year={2023}
 }
 ```
