@@ -1,3 +1,6 @@
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) ![visitors](https://visitor-badge.glitch.me/badge?page_id=Haiyang-W/DSVT)
+
+
 # DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 	
 <!-- [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-pedestrian)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-pedestrian?p=embracing-single-stride-3d-object-detector)
