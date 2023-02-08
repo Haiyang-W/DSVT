@@ -16,7 +16,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 
 > DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 >
-> [Haiyang Wang*](https://scholar.google.com/citations?user=R3Av3IkAAAAJ&hl=en&oi=ao), Chen Shi*, Shaoshuai Shi $^\dagger$, Meng Lei, Sen Wang, Di He, Bernt Schiele, Liwei Wang$^\dagger$
+> [Haiyang Wang*](https://scholar.google.com/citations?user=R3Av3IkAAAAJ&hl=en&oi=ao), Chen Shi*, Shaoshuai Shi $^\dagger$, Meng Lei, Sen Wang, Di He, Bernt Schiele, Liwei Wang $^\dagger$
 > - Primary contact: Haiyang Wang ( wanghaiyang6@stu.pku.edu.cn )
 
 <div align="center">
