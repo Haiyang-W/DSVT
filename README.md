@@ -14,12 +14,17 @@
 
 This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](https://arxiv.org/abs/2301.06051) as well as the follow-ups. Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
 
+> DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
+>
+> [Haiyang Wang*](https://scholar.google.com/citations?user=R3Av3IkAAAAJ&hl=en&oi=ao), Chen Shi*, Shaoshuai Shi $^\dagger$, Meng Lei, Sen Wang, Di He, Bernt Schiele, Liwei Wang$^\dagger$
+> - Primary contact: Haiyang Wang ( wanghaiyang6@stu.pku.edu.cn )
+
 <div align="center">
   <img src="assets/Figure2.png" width="500"/>
 </div>
 
 ## News
-- [23-01-18] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
+- [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
 
 ## Introduction
 Dynamic Sparse Voxel Transformer is an efficient yet deployment-friendly 3D transformer backbone for outdoor 3D object detection. It partitions a series of local regions in each window according to its sparsity and then computes the features of all regions in a fully parallel manner. Moreover, to allow the cross-set connection, it designs a rotated set partitioning strategy that alternates between two partitioning configurations in consecutive self-attention layers.
