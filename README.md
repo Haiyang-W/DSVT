@@ -26,6 +26,13 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 ## News
 - [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
 
+## TODO
+
+- [x] Release the [arXiv](https://arxiv.org/abs/2301.06051) version.
+- [ ] Clean up and release the code.
+- [ ] Release the SOTA results of 3D Object Detection and Bev Map Segmentation on nuScenes dataset.
+- [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
+
 ## Introduction
 Dynamic Sparse Voxel Transformer is an efficient yet deployment-friendly 3D transformer backbone for outdoor 3D object detection. It partitions a series of local regions in each window according to its sparsity and then computes the features of all regions in a fully parallel manner. Moreover, to allow the cross-set connection, it designs a rotated set partitioning strategy that alternates between two partitioning configurations in consecutive self-attention layers.
 
