@@ -25,6 +25,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 
 ## News
 - [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
+- [23-02-28] 🔥 DSVT is accepted at CVPR 2023.
 
 ## TODO
 
