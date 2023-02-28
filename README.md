@@ -84,22 +84,22 @@ We present a comparison with other state-of-the-art methods on both inference sp
 
 |  Model  |  Latency |  mAP_L2  | mAPH_L2 | 
 |---------|---------|---------|--------|
-|  Centerpoint-Pillar | 35ms       |  74.3   |  72.1  |
-|  Centerpoint-Voxel | 40ms       |  76.0   |  74.5  |
-|  PV-RCNN++(center) | 113ms       |  76.7   |  75.4  |
-|  DSVT(Pillar) | 67ms       |  77.3   |  75.9  |  
-|  DSVT(Voxel) | 97ms       |  74.8   |  72.8  |
-|  DSVT(Pillar+TensorRt) | 37ms       |  76.6   |  75.1  |  
+|  Centerpoint-Pillar | 35ms       |  66.0   |  62.2  |
+|  Centerpoint-Voxel | 40ms       |  68.2   |  65.8  |
+|  PV-RCNN++(center) | 113ms       |  71.7   |  69.5  |
+|  DSVT(Pillar) | 67ms       |  72.9   |  70.7  |  
+|  DSVT(Voxel) | 97ms       |  73.5   |  71.5  |
+|  DSVT(Pillar+TensorRt) | 37ms       |  72.9   |  70.6  |  
 
 
 
 ## Citation
 Please consider citing our work as follows if it is helpful.
 ```
-@article{wang2023dsvt,
+@inproceedings{wang2023dsvt,
     title={DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets},
     author={Haiyang Wang, Chen Shi, Shaoshuai Shi, Meng Lei, Sen Wang, Di He, Bernt Schiele and Liwei Wang},
-    journal={arXiv preprint arXiv:2301.06051},
+    booktitle={CVPR},
     year={2023}
 }
 ```
