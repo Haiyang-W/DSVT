@@ -87,9 +87,9 @@ We present a comparison with other state-of-the-art methods on both inference sp
 |  Centerpoint-Pillar | 35ms       |  66.0   |  62.2  |
 |  Centerpoint-Voxel | 40ms       |  68.2   |  65.8  |
 |  PV-RCNN++(center) | 113ms       |  71.7   |  69.5  |
-|  DSVT(Pillar) | 67ms       |  72.9   |  70.7  |  
-|  DSVT(Voxel) | 97ms       |  73.5   |  71.5  |
-|  DSVT(Pillar+TensorRt) | 37ms       |  72.9   |  70.6  |  
+|  DSVT(Pillar) | 67ms       |  73.2   |  71.0  |  
+|  DSVT(Voxel) | 97ms       |  74.0   |  72.1  |
+|  DSVT(Pillar+TensorRt) | 37ms       |  73.2   |  71.0  |  
 
 
 
