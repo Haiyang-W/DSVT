@@ -30,7 +30,8 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 ## TODO
 
 - [x] Release the [arXiv](https://arxiv.org/abs/2301.06051) version.
-- [ ] Clean up and release the code.
+- [ ] Clean up and release the code. (at most end of March)
+- [ ] SOTA performance of NuScenes 3D object detection and BEV Map Segmentation. (at most end of March) 
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
 ## Introduction
