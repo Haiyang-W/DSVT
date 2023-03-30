@@ -3,7 +3,7 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsvt-dynamic-sparse-voxel-transformer-with/3d-object-detection-on-waymo-cyclist)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-cyclist?p=dsvt-dynamic-sparse-voxel-transformer-with)
 
 
-[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) ![visitors](https://visitor-badge.glitch.me/badge?page_id=Haiyang-W/DSVT)
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) ![visitors](https://visitor-badge.glitch.me/badge?page_id=Haiyang-W/DSVT) [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F7a0a7f47c1614b813e35e15a2c0c0a488ee5e0aa%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/DSVT%3A-Dynamic-Sparse-Voxel-Transformer-with-Rotated-Wang-Shi/7a0a7f47c1614b813e35e15a2c0c0a488ee5e0aa)
 
 
 # DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
@@ -31,8 +31,8 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 ## TODO
 
 - [x] Release the [arXiv](https://arxiv.org/abs/2301.06051) version.
-- [x] SOTA performance of Waymo 3D object detection, NuScenes 3D object detection and NuScenes BEV Map Segmentation.
-- [x] Clean up and release the code.
+- [x] SOTA performance of 3D object detection (Waymo & Nuscenes) and BEV Map Segmentation (Nuscenes).
+- [x] Clean up and release the code of Waymo.
 - [ ] Release code of NuScenes.
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
@@ -82,15 +82,15 @@ We run training for 3 times and report average metrics across all results.
 
 
 ### 3D Object Detection (on NuScenes validation)
-|  Model  | mAP | NDS |
-|---------|---------|--------|
-|  DSVT(Pillar) | 66.4 | 71.1 |
+|  Model  | mAP | NDS | mATE | mASE | mAOE | mAVE| mAAE |
+|---------|---------|--------|---------|---------|--------|---------|--------|
+|  DSVT(Pillar) | 66.4 | 71.1 | 27.0 | 24.8 | 27.2 | 22.6 | 18.9|
 
 
 ### 3D Object Detection (on NuScenes test)
-|  Model  | mAP | NDS | results |
-|---------|---------|--------|--------|
-|  DSVT(Pillar) | 68.4 | 72.7 | [result.json](https://drive.google.com/file/d/1lfi06sRroNrlrmkgocSiInJigeSYskLi/view?usp=share_link) |
+|  Model  | mAP | NDS | mATE | mASE | mAOE | mAVE| mAAE | results |
+|---------|---------|--------|--------|---------|---------|--------|---------|--------|
+|  DSVT(Pillar) | 68.4 | 72.7 | 24.8 | 23.0 | 29.6 | 24.6 | 13.6 | [result.json](https://drive.google.com/file/d/1lfi06sRroNrlrmkgocSiInJigeSYskLi/view?usp=share_link) |
 
 ### Bev Map Segmentation (on NuScenes validation)
 |  Model  | Drivable |Ped.Cross.| Walkway |  StopLine  | Carpark |  Divider  |  mIoU  |
@@ -101,6 +101,7 @@ We run training for 3 times and report average metrics across all results.
 We present a comparison with other state-of-the-art methods on both inference speed and performance accuracy. **After being deployed by NVIDIA TensorRT, our model can achieve a real-time running speed (27Hz).** 
 
 ![Speed](assets/Figure1_arxiv.png)
+
 
 |  Model  |  Latency |  mAP_L2  | mAPH_L2 | 
 |---------|---------|---------|--------|
@@ -137,11 +138,20 @@ bash scripts/dist_test.sh 8 --cfg_file <CONFIG_FILE> --ckpt <CHECKPOINT_FILE>
 
 
 ### Quick Start
-We provide results trained with a single frame of 20% data for 12 epoch on 8 RTX 3090 GPUs.
-|  Model  |  Batch Size | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
-|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1       |  75.3/72.4  |  69.3/66.4 | 75.3/74.8 | 66.9/66.4 | 79.4/71.7 | 71.7/64.6 | 71.9/70.8 | 69.2/68.1 | [Log](https://drive.google.com/file/d/1XoLwwzDUGRRUv0hNeRNBoGwxaibH5KRG/view?usp=share_link) |
-|  [DSVT(Voxel)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1        |  76.2/73.6  | 69.9/67.4  | 75.7/75.2 | 67.2/66.8 | 80.1/73.7 | 72.5/66.4 | 72.8/71.8 | 70.1/69.1 | [Log](https://drive.google.com/file/d/14iZpyinw-_2HjI4oR1JpCvSMK9AI8wDf/view?usp=share_link) | 
+- To cater to users with limited resources who require quick experimentation, we also provide results trained with a single frame of 20% data for 12 epoch on 8 RTX 3090 GPUs.
+  
+| Performance@(20% Data for 12 epoch)  |  Batch Size | Training time | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1   | ~5.5h  |  75.3/72.4  |  69.3/66.4 | 75.3/74.8 | 66.9/66.4 | 79.4/71.7 | 71.7/64.6 | 71.9/70.8 | 69.2/68.1 | [Log](https://drive.google.com/file/d/1XoLwwzDUGRRUv0hNeRNBoGwxaibH5KRG/view?usp=share_link) |
+|  [DSVT(Voxel)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1    | ~6.5h  |  76.2/73.6  | 69.9/67.4  | 75.7/75.2 | 67.2/66.8 | 80.1/73.7 | 72.5/66.4 | 72.8/71.8 | 70.1/69.1 | [Log](https://drive.google.com/file/d/14iZpyinw-_2HjI4oR1JpCvSMK9AI8wDf/view?usp=share_link) | 
+
+- To reproduce the resutls in main paper, please refer the following configs.
+  
+| Performance@(100% Data for 24 epoch)  |  Batch Size | Training time | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_plain_1f_onestage.yaml) | 3 |  ~22.5h      |  79.5/77.1  | 73.2/71.0  | 79.3/78.8 | 70.9/70.5 | 82.8/77.0 | 75.2/69.8 | 76.4/75.4 | 73.6/72.7 | [Log](https://drive.google.com/file/d/1DlEMIb-ZUFilJBDd8fuyb8nuRnSFPzWy/view?usp=share_link) |
+|  [DSVT(Voxel)](tools/cfgs/dsvt_models/dsvt_3D_1f_onestage.yaml) | 3 | ~27.5h |  80.3/78.2  |  74.0/72.1  | 79.7/79.3 | 71.4/71.0 | 83.7/78.9 | 76.1/71.5 | 77.5/76.5 | 74.6/73.7 | [Log](https://drive.google.com/file/d/19Z8Q6Mp945XJaLuccb5rtYejGQdl7xjG/view?usp=share_link) | 
+
 
 ## Citation
 Please consider citing our work as follows if it is helpful.
