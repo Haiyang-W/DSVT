@@ -30,8 +30,9 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 ## TODO
 
 - [x] Release the [arXiv](https://arxiv.org/abs/2301.06051) version.
-- [ ] Clean up and release the code. (at most end of March)
-- [ ] SOTA performance of NuScenes 3D object detection and BEV Map Segmentation. (at most end of March) 
+- [x] SOTA performance of Waymo 3D object detection, NuScenes 3D object detection and NuScenes BEV Map Segmentation.
+- [x] Clean up and release the code.
+- [ ] Release code of NuScenes.
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
 ## Introduction
@@ -44,39 +45,56 @@ DSVT achieves state-of-the-art performance on large-scale Waymo one-sweeps 3D ob
 ## Main results
 **We provide the pillar and voxel 3D version of one-stage DSVT. The two-stage versions with [CT3D](https://github.com/hlsheng1/CT3D) are also listed below.**
 ### 3D Object Detection (on Waymo validation)
+We run training for 3 times and report average metrics across all results.
 #### One-Sweeps Setting
-|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 |
-|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|
-|  DSVT(Pillar) | 1       |  79.5/77.1  | 73.2/71.0  | 79.3/78.8 | 70.9/70.5 | 82.8/77.0 | 75.2/69.8 | 76.4/75.4 | 73.6/72.7 |
-|  DSVT(Voxel) | 1        |  80.3/78.2  |  74.0/72.1  | 79.7/79.3 | 71.4/71.0 | 83.7/78.9 | 76.1/71.5 | 77.5/76.5 | 74.6/73.7 | 
-|  DSVT(Pillar-TS) | 1    |  80.6/78.2  |  74.3/72.1  | 80.2/79.7 | 72.0/71.6 | 83.7/78.0 | 76.1/70.7 | 77.8/76.8 | 74.9/73.9 | 
-|  DSVT(Voxel-TS) | 1     |  81.1/78.9  |  74.8/72.8  | 80.4/79.9 | 72.2/71.8 | 84.2/79.3 | 76.5/71.8 | 78.6/77.6 | 75.7/74.7 | 
+|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  DSVT(Pillar) | 1       |  79.5/77.1  | 73.2/71.0  | 79.3/78.8 | 70.9/70.5 | 82.8/77.0 | 75.2/69.8 | 76.4/75.4 | 73.6/72.7 | [Log](https://drive.google.com/file/d/1DlEMIb-ZUFilJBDd8fuyb8nuRnSFPzWy/view?usp=share_link) |
+|  DSVT(Voxel) | 1        |  80.3/78.2  |  74.0/72.1  | 79.7/79.3 | 71.4/71.0 | 83.7/78.9 | 76.1/71.5 | 77.5/76.5 | 74.6/73.7 | [Log](https://drive.google.com/file/d/19Z8Q6Mp945XJaLuccb5rtYejGQdl7xjG/view?usp=share_link) | 
+|  DSVT(Pillar-TS) | 1    |  80.6/78.2  |  74.3/72.1  | 80.2/79.7 | 72.0/71.6 | 83.7/78.0 | 76.1/70.7 | 77.8/76.8 | 74.9/73.9 | [Log](https://drive.google.com/file/d/1YeVpF7An79yBZApCkagfnwGgFniZWRZl/view?usp=share_link) | 
+|  DSVT(Voxel-TS) | 1     |  81.1/78.9  |  74.8/72.8  | 80.4/79.9 | 72.2/71.8 | 84.2/79.3 | 76.5/71.8 | 78.6/77.6 | 75.7/74.7 | [Log](https://drive.google.com/file/d/1hwrQ2iEiuIBKlXn1UhOGYhwdfogF9PpY/view?usp=share_link) | 
 
 #### Multi-Sweeps Setting
 ##### 2-Sweeps
-|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 |
-|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|
-|  DSVT(Pillar) | 2        |  81.4/79.8  |  75.4/73.9  | 80.8/80.3 | 72.7/72.3 | 84.5/81.3 | 77.2/74.1 | 78.8/77.9 | 76.3/75.4 |
-|  DSVT(Voxel) | 2       |  81.9/80.4  |  76.0/74.6  | 81.1/80.6 | 73.0/72.6 | 84.9/81.7 | 77.8/74.8 | 79.8/78.9 | 77.3/76.4 |
-|  DSVT(Pillar-TS) | 2       |  81.9/80.4  |  76.0/74.5  | 81.3/80.9 | 73.4/73.0 | 85.2/81.9 | 77.9/74.7 | 79.2/78.3 | 76.7/75.9 | 
-|  DSVT(Voxel-TS) | 2       |  82.3/80.8  |  76.6/75.1  | 81.4/81.0 | 73.5/73.1 | 85.4/82.2 | 78.4/75.3 | 80.2/79.3 | 77.8/76.9 |
+|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  DSVT(Pillar) | 2        |  81.4/79.8  |  75.4/73.9  | 80.8/80.3 | 72.7/72.3 | 84.5/81.3 | 77.2/74.1 | 78.8/77.9 | 76.3/75.4 | [Log](https://drive.google.com/file/d/13uFqSxxlQuywLvU5CZhK9R7JoGqVXAt4/view?usp=share_link) |
+|  DSVT(Voxel) | 2       |  81.9/80.4  |  76.0/74.6  | 81.1/80.6 | 73.0/72.6 | 84.9/81.7 | 77.8/74.8 | 79.8/78.9 | 77.3/76.4 | [Log](https://drive.google.com/file/d/1Ketd-x5MvJXBbJiFAeVtFDQyyACGekL-/view?usp=share_link) |
+|  DSVT(Pillar-TS) | 2       |  81.9/80.4  |  76.0/74.5  | 81.3/80.9 | 73.4/73.0 | 85.2/81.9 | 77.9/74.7 | 79.2/78.3 | 76.7/75.9 | [Log](https://drive.google.com/file/d/1tTyg3mkTTuYrbk3O_F2C5R8Yi0JYXfkb/view?usp=share_link) | 
+|  DSVT(Voxel-TS) | 2       |  82.3/80.8  |  76.6/75.1  | 81.4/81.0 | 73.5/73.1 | 85.4/82.2 | 78.4/75.3 | 80.2/79.3 | 77.8/76.9 | [Log](https://drive.google.com/file/d/15BH2FwQIZQ3IVkPmexilrVd4BO7shIcK/view?usp=share_link) |
 
 ##### 3-Sweeps
-|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 |
-|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|
-|  DSVT(Pillar) | 3       |  81.9/80.5  |  76.2/74.8  | 81.2/80.8 | 73.3/72.9 | 85.0/82.0 | 78.0/75.0 | 79.6/78.8 | 77.2/76.4 |
-|  DSVT(Voxel) | 3       |  82.1/80.8  |  76.3/75.0  |  81.5/81.1 | 73.6/73.2 | 85.3/82.4 | 78.2/75.4 | 79.6/78.8 | 77.2/76.4 |
-|  DSVT(Pillar-TS) | 3       |  82.5/81.0  |  76.7/75.4  | 81.8/81.3 | 74.0/73.6 | 85.6/82.6 | 78.5/75.6 | 80.1/79.2 | 77.7/76.9 |
-|  DSVT(Voxel-TS) | 3       |  82.6/81.2  |  76.8/75.5  | 81.8/81.4 | 74.0/73.6 | 85.8/82.9 | 78.8/75.9 | 80.1/79.2 | 77.7/76.9 |
+|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  DSVT(Pillar) | 3       |  81.9/80.5  |  76.2/74.8  | 81.2/80.8 | 73.3/72.9 | 85.0/82.0 | 78.0/75.0 | 79.6/78.8 | 77.2/76.4 | [Log](https://drive.google.com/file/d/1C7Koel3xVVixpkQenJyx7koIMQ2x-pbU/view?usp=share_link) | 
+|  DSVT(Voxel) | 3       |  82.1/80.8  |  76.3/75.0  |  81.5/81.1 | 73.6/73.2 | 85.3/82.4 | 78.2/75.4 | 79.6/78.8 | 77.2/76.4 | [Log](https://drive.google.com/file/d/1BOiCTcN8Izz6hY3sQeifTjxSHnMkz-S5/view?usp=share_link) | 
+|  DSVT(Pillar-TS) | 3       |  82.5/81.0  |  76.7/75.4  | 81.8/81.3 | 74.0/73.6 | 85.6/82.6 | 78.5/75.6 | 80.1/79.2 | 77.7/76.9 | [Log](https://drive.google.com/file/d/1ylMBirihLJLIVXEllLHxw5C7JQoYXZpL/view?usp=share_link) | 
+|  DSVT(Voxel-TS) | 3       |  82.6/81.2  |  76.8/75.5  | 81.8/81.4 | 74.0/73.6 | 85.8/82.9 | 78.8/75.9 | 80.1/79.2 | 77.7/76.9 | [Log](https://drive.google.com/file/d/1eJChG0DulNXxcC5tysAIzFw6lyALFQEk/view?usp=share_link) | 
 
 ##### 4-Sweeps
-|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 |
-|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|
-|  DSVT(Pillar) | 4       |  82.5/81.0  |  76.7/75.3  |  81.7/81.2 | 73.8/73.4 | 85.4/82.3 | 78.5/75.5 | 80.3/79.4 | 77.9/77.1 |
-|  DSVT(Voxel) | 4       |  82.6/81.3  |  76.9/75.6  | 81.8/81.4 | 74.1/73.6 | 85.6/82.8 | 78.6/75.9 | 80.4/79.6 | 78.1/77.3 |
-|  DSVT(Pillar-TS) | 4       |  82.9/81.5  |  77.3/75.9  | 82.1/81.6 | 74.4/74.0 | 85.8/82.8 | 79.0/76.1 | 80.9/80.0 | 78.6/77.7 |
-|  DSVT(Voxel-TS) | 4       |  83.1/81.7  |  77.5/76.2  | 82.1/81.6 | 74.5/74.1 | 86.0/83.2 | 79.1/76.4 | 81.1/80.3 | 78.8/78.0 |
+|  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  DSVT(Pillar) | 4       |  82.5/81.0  |  76.7/75.3  |  81.7/81.2 | 73.8/73.4 | 85.4/82.3 | 78.5/75.5 | 80.3/79.4 | 77.9/77.1 | [Log](https://drive.google.com/file/d/1vziBYjNrACuf3T2dqq2rIPucJMKf827y/view?usp=share_link) | 
+|  DSVT(Voxel) | 4       |  82.6/81.3  |  76.9/75.6  | 81.8/81.4 | 74.1/73.6 | 85.6/82.8 | 78.6/75.9 | 80.4/79.6 | 78.1/77.3 | [Log](https://drive.google.com/file/d/1e-2h03w19bIFcj99pvbpQ9Y682oq17tN/view?usp=share_link) | 
+|  DSVT(Pillar-TS) | 4       |  82.9/81.5  |  77.3/75.9  | 82.1/81.6 | 74.4/74.0 | 85.8/82.8 | 79.0/76.1 | 80.9/80.0 | 78.6/77.7 | [Log](https://drive.google.com/file/d/1f9FzlPpk5qlqBXTU47O-QW7dTvVqr77x/view?usp=share_link) | 
+|  DSVT(Voxel-TS) | 4       |  83.1/81.7  |  77.5/76.2  | 82.1/81.6 | 74.5/74.1 | 86.0/83.2 | 79.1/76.4 | 81.1/80.3 | 78.8/78.0 | [Log](https://drive.google.com/file/d/13ZnoOqdkwnjgLRSCM9VFHL3kqrw0N4oB/view?usp=share_link) | 
 
+
+### 3D Object Detection (on NuScenes validation)
+|  Model  | mAP | NDS |
+|---------|---------|--------|
+|  DSVT(Pillar) | 66.4 | 71.1 |
+
+
+### 3D Object Detection (on NuScenes test)
+|  Model  | mAP | NDS | results |
+|---------|---------|--------|--------|
+|  DSVT(Pillar) | 68.4 | 72.7 | [result.json](https://drive.google.com/file/d/1lfi06sRroNrlrmkgocSiInJigeSYskLi/view?usp=share_link) |
+
+### Bev Map Segmentation (on NuScenes validation)
+|  Model  | Drivable |Ped.Cross.| Walkway |  StopLine  | Carpark |  Divider  |  mIoU  |
+|---------|----------|--------|--------|--------|--------|---------|--------|
+|  DSVT(Pillar) |   87.6   |   67.2   |   72.7   |   59.7   |   62.7  |   58.2   |   68.0   |
 
 #### Inference Speed
 We present a comparison with other state-of-the-art methods on both inference speed and performance accuracy. **After being deployed by NVIDIA TensorRT, our model can achieve a real-time running speed (27Hz).** 
@@ -93,6 +111,36 @@ We present a comparison with other state-of-the-art methods on both inference sp
 |  DSVT(Pillar+TensorRt) | 37ms       |  73.2   |  71.0  |  
 
 
+## Usage
+### Installation
+Please refer to [INSTALL.md](docs/INSTALL.md) for installation.
+### Training
+```
+# multi-gpu training
+cd tools
+bash scripts/dist_train.sh 8 --cfg_file <CONFIG_FILE> --sync_bn [other optional arguments]
+```
+You can train the model with fp16 setting to save cuda memory, which may occasionally report gradient NaN error.
+```
+# fp16 training
+cd tools
+bash scripts/dist_train.sh 8 --cfg_file <CONFIG_FILE> --sync_bn --fp16 [other optional arguments]
+```
+
+### Testing
+```
+# multi-gpu testing
+cd tools
+bash scripts/dist_test.sh 8 --cfg_file <CONFIG_FILE> --ckpt <CHECKPOINT_FILE>
+```
+
+
+### Quick Start
+We provide results trained with a single frame of 20% data for 12 epoch on 8 RTX 3090 GPUs.
+|  Model  |  Batch Size | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
+|---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1       |  75.3/72.4  |  69.3/66.4 | 75.3/74.8 | 66.9/66.4 | 79.4/71.7 | 71.7/64.6 | 71.9/70.8 | 69.2/68.1 | [Log](https://drive.google.com/file/d/1XoLwwzDUGRRUv0hNeRNBoGwxaibH5KRG/view?usp=share_link) |
+|  [DSVT(Voxel)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1        |  76.2/73.6  | 69.9/67.4  | 75.7/75.2 | 67.2/66.8 | 80.1/73.7 | 72.5/66.4 | 72.8/71.8 | 70.1/69.1 | [Log](https://drive.google.com/file/d/14iZpyinw-_2HjI4oR1JpCvSMK9AI8wDf/view?usp=share_link) | 
 
 ## Citation
 Please consider citing our work as follows if it is helpful.
