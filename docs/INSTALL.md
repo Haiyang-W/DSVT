@@ -34,4 +34,4 @@ c. Install this library and its dependent libraries by running the following com
 ```shell
 python setup.py develop
 ```
-d. We recommend the users to check the version of numba if you turn on the USE_SHARED_MEMORY in gt_sampling. We find using numba==0.48.0 can significantly save memory.
+d. We recommend the users to check the version of numba. We find using numba==0.48.0 can significantly save memory.

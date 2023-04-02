@@ -171,7 +171,7 @@ bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_D512e.yaml
 ```
 # example DSVT-P@fp32 ~22.5h on NVIDIA A100
 cd tools
-bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_D512e.yaml --sync_bn --logger_iter_interval 500
+bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage.yaml.yaml --sync_bn --logger_iter_interval 500
 ```
 
 ## Possible Issues
