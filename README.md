@@ -33,6 +33,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [x] Release the [arXiv](https://arxiv.org/abs/2301.06051) version.
 - [x] SOTA performance of 3D object detection (Waymo & Nuscenes) and BEV Map Segmentation (Nuscenes).
 - [x] Clean up and release the code of Waymo.
+- [ ] Release the Waymo Multi-Frames Configs.
 - [ ] Release code of NuScenes.
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
@@ -46,7 +47,7 @@ DSVT achieves state-of-the-art performance on large-scale Waymo one-sweeps 3D ob
 ## Main results
 **We provide the pillar and voxel 3D version of one-stage DSVT. The two-stage versions with [CT3D](https://github.com/hlsheng1/CT3D) are also listed below.**
 ### 3D Object Detection (on Waymo validation)
-We run training for 3 times and report average metrics across all results.
+We run training for 3 times and report average metrics across all results. Regrettably, we are unable to provide the pre-trained model weights due to [Waymo Dataset License Agreement](https://waymo.com/open/terms/). However, we can provide the training logs.
 #### One-Sweeps Setting
 |  Model  |  #Sweeps | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
 |---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
@@ -118,7 +119,7 @@ We present a comparison with other state-of-the-art methods on both inference sp
 Please refer to [INSTALL.md](docs/INSTALL.md) for installation.
 
 ### Dataset Preparation
-Please follow the instructions from [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/docs/GETTING_STARTED.md).
+Please follow the instructions from [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/docs/GETTING_STARTED.md). We adopt the same data generation process.
 
 ### Training
 ```
@@ -142,20 +143,44 @@ bash scripts/dist_test.sh 8 --cfg_file <CONFIG_FILE> --ckpt <CHECKPOINT_FILE>
 
 
 ### Quick Start
-- To cater to users with limited resources who require quick experimentation, we also provide results trained with a single frame of 20% data for 12 epoch on 8 RTX 3090 GPUs.
+- To cater to users with limited resources who require quick experimentation, we also provide results trained with a single frame of 20% data for 12 epoch on 8 RTX 3090 GPUs. The following is the variants of dimension(192). 
+- By setting the DSVT to dimension 128 and using fp16 training as mentioned above, you can further reduce CUDA memory usage and computational overhead. This may slightly reduce performance (-0.3 @mAPHL2), but it will significantly decrease training time and CUDA memory consumption.
   
 | Performance@(20% Data for 12 epoch)  |  Batch Size | Training time | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
 |---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_plain_D512e.yaml) | 1   | ~5.5h  |  75.3/72.4  |  69.3/66.4 | 75.3/74.8 | 66.9/66.4 | 79.4/71.7 | 71.7/64.6 | 71.9/70.8 | 69.2/68.1 | [Log](https://drive.google.com/file/d/1XoLwwzDUGRRUv0hNeRNBoGwxaibH5KRG/view?usp=share_link) |
-|  [DSVT(Voxel)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1    | ~6.5h  |  76.2/73.6  | 69.9/67.4  | 75.7/75.2 | 67.2/66.8 | 80.1/73.7 | 72.5/66.4 | 72.8/71.8 | 70.1/69.1 | [Log](https://drive.google.com/file/d/14iZpyinw-_2HjI4oR1JpCvSMK9AI8wDf/view?usp=share_link) | 
+|  [DSVT(Pillar&Dim192)](tools/cfgs/dsvt_models/dsvt_plain_D512e.yaml) | 1   | ~5.5h  |  75.3/72.4  |  69.3/66.4 | 75.3/74.8 | 66.9/66.4 | 79.4/71.7 | 71.7/64.6 | 71.9/70.8 | 69.2/68.1 | [Log](https://drive.google.com/file/d/1XoLwwzDUGRRUv0hNeRNBoGwxaibH5KRG/view?usp=share_link) |
+|  [DSVT(Voxel&Dim192)](tools/cfgs/dsvt_models/dsvt_3D_D512e.yaml) | 1    | ~6.5h  |  76.2/73.6  | 69.9/67.4  | 75.7/75.2 | 67.2/66.8 | 80.1/73.7 | 72.5/66.4 | 72.8/71.8 | 70.1/69.1 | [Log](https://drive.google.com/file/d/14iZpyinw-_2HjI4oR1JpCvSMK9AI8wDf/view?usp=share_link) | 
 
-- To reproduce the resutls in main paper, please refer the following configs.
+```
+# example DSVT-P@fp32 ~5.5h on RTX3090
+cd tools
+bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_D512e.yaml --sync_bn --logger_iter_interval 500
+
+# example DSVT-P@fp16 ~4.0h on RTX3090
+cd tools
+bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_D512e.yaml --sync_bn --fp16 --logger_iter_interval 500
+```
+
+- To reproduce the resutls in main paper, please refer the following configs. These results are trained on 8 NVIDIA A100 GPUs (40GB). 
+- If your computing resources are limited, try reducing batch size and the corresponding lr, such as BATCH_SIZE_PER_GPU = 1 and LR=0.001.
   
 | Performance@(100% Data for 24 epoch)  |  Batch Size | Training time | mAP/H_L1 | mAP/H_L2 | Veh_L1 | Veh_L2 | Ped_L1 | Ped_L2 | Cyc_L1 | Cyc_L2 | Log |
 |---------|---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
 |  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_plain_1f_onestage.yaml) | 3 |  ~22.5h      |  79.5/77.1  | 73.2/71.0  | 79.3/78.8 | 70.9/70.5 | 82.8/77.0 | 75.2/69.8 | 76.4/75.4 | 73.6/72.7 | [Log](https://drive.google.com/file/d/1DlEMIb-ZUFilJBDd8fuyb8nuRnSFPzWy/view?usp=share_link) |
 |  [DSVT(Voxel)](tools/cfgs/dsvt_models/dsvt_3D_1f_onestage.yaml) | 3 | ~27.5h |  80.3/78.2  |  74.0/72.1  | 79.7/79.3 | 71.4/71.0 | 83.7/78.9 | 76.1/71.5 | 77.5/76.5 | 74.6/73.7 | [Log](https://drive.google.com/file/d/19Z8Q6Mp945XJaLuccb5rtYejGQdl7xjG/view?usp=share_link) | 
+```
+# example DSVT-P@fp32 ~22.5h on NVIDIA A100
+cd tools
+bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_D512e.yaml --sync_bn --logger_iter_interval 500
+```
 
+## Possible Issues
+* If you are limited by computation resource, please try to reduce the batch size and adopt fp16 training schemes.
+* If your memory is limited, please turn off the [USE_SHARED_MEMORY](https://github.com/Haiyang-W/DSVT/blob/d215f68f3846e1f7afe3add7154be730a12a02b4/tools/cfgs/dsvt_models/dsvt_plain_D512e.yaml#L15).
+* If your training process takes up a lot of memory and the program starts slowly, please reduce the numba version to 0.48, as mentioned in [INSTALL.md](docs/INSTALL.md).
+* If you encounter a gradient that becomes NaN during fp16 training, don't worry, it's normal. You can try a few more times.
+* If you couldn’t find a solution, search open and closed issues in our github issues page [here](https://github.com/Haiyang-W/DSVT/issues).
+* If still no-luck, open a new issue in our github. Our turnaround is usually a couple of days.
 
 ## Citation
 Please consider citing our work as follows if it is helpful.
@@ -169,6 +194,9 @@ Please consider citing our work as follows if it is helpful.
 ```
 
 ## Acknowledgments
-This project is based on the following codebases.
-* [OpenPCDet](https://github.com/open-mmlab/OpenPCDet)
-* [SST](https://github.com/tusen-ai/SST)
+DSVT uses code from a few open source repositories. Without the efforts of these folks (and their willingness to release their implementations), DSVT would not be possible. We thanks these authors for their efforts!
+* Shaoshuai Shi: [OpenPCDet](https://github.com/open-mmlab/OpenPCDet)
+* Lue Fan: [SST](https://github.com/tusen-ai/SST)
+* Tianwei Yin: [CenterPoint](https://github.com/tianweiy/CenterPoint)
+
+We would like to thank Lue Fan, Lihe Ding and Shaocong Dong for their helpful discussions. This project is partially supported by the National Key R\&D Program of China (2022ZD0160302) and National Science Foundation of China (NSFC62276005).
