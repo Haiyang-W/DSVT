@@ -116,6 +116,10 @@ We present a comparison with other state-of-the-art methods on both inference sp
 ## Usage
 ### Installation
 Please refer to [INSTALL.md](docs/INSTALL.md) for installation.
+
+### Dataset Preparation
+Please follow the instructions from [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/docs/GETTING_STARTED.md).
+
 ### Training
 ```
 # multi-gpu training
