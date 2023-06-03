@@ -426,3 +426,71 @@ def calculate_iou_reg_loss_centerhead(batch_box_preds, mask, ind, gt_boxes):
 
     loss = (1.0 - iou).sum() / torch.clamp(mask.sum(), min=1e-4)
     return loss
+
+
+class L1Loss(nn.Module):
+    def __init__(self):
+        super(L1Loss, self).__init__()
+       
+    def forward(self, pred, target):
+        if target.numel() == 0:
+            return pred.sum() * 0
+        assert pred.size() == target.size()
+        loss = torch.abs(pred - target)
+        return loss
+
+
+class GaussianFocalLoss(nn.Module):
+    """GaussianFocalLoss is a variant of focal loss.
+
+    More details can be found in the `paper
+    <https://arxiv.org/abs/1808.01244>`_
+    Code is modified from `kp_utils.py
+    <https://github.com/princeton-vl/CornerNet/blob/master/models/py_utils/kp_utils.py#L152>`_  # noqa: E501
+    Please notice that the target in GaussianFocalLoss is a gaussian heatmap,
+    not 0/1 binary target.
+
+    Args:
+        alpha (float): Power of prediction.
+        gamma (float): Power of target for negative samples.
+        reduction (str): Options are "none", "mean" and "sum".
+        loss_weight (float): Loss weight of current loss.
+    """
+
+    def __init__(self,
+                 alpha=2.0,
+                 gamma=4.0):
+        super(GaussianFocalLoss, self).__init__()
+        self.alpha = alpha
+        self.gamma = gamma
+
+    def forward(self, pred, target):
+        eps = 1e-12
+        pos_weights = target.eq(1)
+        neg_weights = (1 - target).pow(self.gamma)
+        pos_loss = -(pred + eps).log() * (1 - pred).pow(self.alpha) * pos_weights
+        neg_loss = -(1 - pred + eps).log() * pred.pow(self.alpha) * neg_weights
+
+        return pos_loss + neg_loss
+
+
+def calculate_iou_loss_transfusionhead(iou_preds, batch_box_preds, gt_boxes, weights, num_pos):
+    """
+    Args:
+        iou_preds: (batch x 1 x proposal)
+        batch_box_preds: (batch x proposal x 7)
+        # gt_boxes: (batch x N, 7 or 9)
+        gt_boxes: (batch x proposal x 7)
+        weights:
+        num_pos: int
+    Returns:
+    """
+    iou_target = iou3d_nms_utils.paired_boxes_iou3d_gpu(batch_box_preds.reshape(-1, 7), gt_boxes.reshape(-1, 7))
+    valid_index = torch.nonzero(iou_target * weights[:, :, 0].view(-1)).squeeze(-1)
+    num_pos = valid_index.shape[0]
+
+    iou_target = iou_target * 2 - 1  # [0, 1] ==> [-1, 1]
+
+    loss = F.l1_loss(iou_preds.view(-1)[valid_index], iou_target[valid_index], reduction='sum')
+    loss = loss / max(num_pos, 1)
+    return loss

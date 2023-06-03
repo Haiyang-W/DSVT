@@ -13,6 +13,7 @@ from .mppnet import MPPNet
 from .mppnet_e2e import MPPNetE2E
 from .CT3D import CT3D
 from .CT3D_3CAT import CT3D_3CAT
+from .transfusion import TransFusion
 
 __all__ = {
     'Detector3DTemplate': Detector3DTemplate,
@@ -29,7 +30,8 @@ __all__ = {
     'MPPNet': MPPNet,
     'MPPNetE2E': MPPNetE2E,
     'CT3D': CT3D,
-    'CT3D_3CAT': CT3D_3CAT
+    'CT3D_3CAT': CT3D_3CAT,
+    'TransFusion': TransFusion
 }
 
 

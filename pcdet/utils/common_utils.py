@@ -62,6 +62,12 @@ def mask_points_by_range(points, limit_range):
            & (points[:, 1] >= limit_range[1]) & (points[:, 1] <= limit_range[4])
     return mask
 
+def mask_points_by_range_v2(points, limit_range):
+    mask = (points[:, 0] >= limit_range[0]) & (points[:, 0] <= limit_range[3]) \
+           & (points[:, 1] >= limit_range[1]) & (points[:, 1] <= limit_range[4]) \
+           & (points[:, 2] >= limit_range[2]) & (points[:, 2] <= limit_range[5])
+    return mask
+
 
 def get_voxel_centers(voxel_coords, downsample_times, voxel_size, point_cloud_range):
     """

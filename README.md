@@ -27,14 +27,15 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
 - [23-02-28] 🔥 DSVT is accepted at CVPR 2023.
 - [23-03-30] Code of Waymo is released.
+- [23-06-03] Code of NuScenes is released.
 
 ## TODO
 
 - [x] Release the [arXiv](https://arxiv.org/abs/2301.06051) version.
 - [x] SOTA performance of 3D object detection (Waymo & Nuscenes) and BEV Map Segmentation (Nuscenes).
 - [x] Clean up and release the code of Waymo.
+- [x] Release code of NuScenes.
 - [ ] Release the Waymo Multi-Frames Configs.
-- [ ] Release code of NuScenes.
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
 ## Introduction
@@ -83,9 +84,9 @@ We run training for 3 times and report average metrics across all results. Regre
 
 
 ### 3D Object Detection (on NuScenes validation)
-|  Model  | mAP | NDS | mATE | mASE | mAOE | mAVE| mAAE |
-|---------|---------|--------|---------|---------|--------|---------|--------|
-|  DSVT(Pillar) | 66.4 | 71.1 | 27.0 | 24.8 | 27.2 | 22.6 | 18.9|
+|  Model  | mAP | NDS | mATE | mASE | mAOE | mAVE| mAAE | ckpt |
+|---------|---------|--------|---------|---------|--------|---------|--------|--------|
+|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_nusences.yaml) | 66.4 | 71.1 | 27.0 | 24.8 | 27.2 | 22.6 | 18.9| [ckpt](https://drive.google.com/file/d/10d7c-uJxg5w4GN-JmRBQi4gQDwHiOHxP/view?usp=drive_link)|
 
 
 ### 3D Object Detection (on NuScenes test)

@@ -80,7 +80,11 @@ class DataProcessor(object):
             return partial(self.mask_points_and_boxes_outside_range, config=config)
 
         if data_dict.get('points', None) is not None:
-            mask = common_utils.mask_points_by_range(data_dict['points'], self.point_cloud_range)
+            mask_z = config.get('MASK_Z', False)
+            if mask_z:
+                mask = common_utils.mask_points_by_range_v2(data_dict['points'], self.point_cloud_range)
+            else:
+                mask = common_utils.mask_points_by_range(data_dict['points'], self.point_cloud_range)
             data_dict['points'] = data_dict['points'][mask]
 
         if data_dict.get('gt_boxes', None) is not None and config.REMOVE_OUTSIDE_BOXES and self.training:
