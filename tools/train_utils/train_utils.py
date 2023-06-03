@@ -218,7 +218,7 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                         root_path = Path(dataset_cfg.DATA_PATH)
                         new_data_augmentor = DataAugmentor(root_path, dataset_cfg.DATA_AUGMENTOR, class_names, logger=logger)
                         dataloader_iter._dataset.data_augmentor = new_data_augmentor
-                        augment_disable_flag == True
+                        augment_disable_flag = True
 
 
             accumulated_iter = train_one_epoch(
