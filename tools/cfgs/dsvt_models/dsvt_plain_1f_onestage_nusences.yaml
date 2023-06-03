@@ -13,10 +13,6 @@ DATA_CONFIG:
         DB_INFO_PATH:
           - nuscenes_dbinfos_10sweeps_withvelo.pkl
 
-        USE_SHARED_MEMORY: True  # set it to True to speed up (it costs about 15GB shared memory)
-        DB_DATA_PATH:
-          - nuscenes_gt_database__10sweeps_global.npy
-
         PREPARE: {
           filter_by_min_points: [
               'car:5','truck:5', 'construction_vehicle:5', 'bus:5', 'trailer:5',
