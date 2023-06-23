@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 
 from .dsvt_input_layer import DSVTInputLayer
+from ..model_utils.tensorrt_utils.trtwrapper import TRTWrapper
 
 
 class DSVT(nn.Module):
@@ -252,11 +253,14 @@ class SetAttention(nn.Module):
 
         # map voxel featurs from set space to voxel space: (set_num, set_size, C) --> (N, C)
         flatten_inds = voxel_inds.reshape(-1)
-        unique_flatten_inds, inverse = torch.unique(flatten_inds, return_inverse=True)
-        perm = torch.arange(inverse.size(0), dtype=inverse.dtype, device=inverse.device)
-        inverse, perm = inverse.flip([0]), perm.flip([0])
-        perm = inverse.new_empty(unique_flatten_inds.size(0)).scatter_(0, inverse, perm)
-        src2 = src2.reshape(-1, self.d_model)[perm]
+        # unique_flatten_inds, inverse = torch.unique(flatten_inds, return_inverse=True)
+        # perm = torch.arange(inverse.size(0), dtype=inverse.dtype, device=inverse.device)
+        # inverse, perm = inverse.flip([0]), perm.flip([0])
+        # perm = inverse.new_empty(unique_flatten_inds.size(0)).scatter_(0, inverse, perm)
+        # src2 = src2.reshape(-1, self.d_model)[perm]
+        src2_placeholder = torch.zeros_like(src).to(src2.dtype)
+        src2_placeholder[flatten_inds] = src2.reshape(-1, self.d_model)
+        src2 = src2_placeholder
 
         # FFN layer
         src = src + self.dropout1(src2)
@@ -317,3 +321,70 @@ def _get_block_module(name):
     if name == "DSVTBlock":
         return DSVTBlock
     raise RuntimeError(F"This Block not exist.")
+
+
+class DSVT_TrtEngine(nn.Module):
+    def __init__(self, model_cfg, **kwargs):
+        super().__init__()
+
+        self.model_cfg = model_cfg
+        self.input_layer = DSVTInputLayer(self.model_cfg.INPUT_LAYER)
+        block_name = self.model_cfg.block_name
+        set_info = self.model_cfg.set_info
+        d_model = self.model_cfg.d_model
+        nhead = self.model_cfg.nhead
+        dim_feedforward = self.model_cfg.dim_feedforward
+        dropout = self.model_cfg.dropout
+        activation = self.model_cfg.activation
+        self.reduction_type = self.model_cfg.get('reduction_type', 'attention')
+        stage_num = len(block_name)
+ 
+        input_names = [
+            'src',
+            'set_voxel_inds_tensor_shift_0', 
+            'set_voxel_inds_tensor_shift_1', 
+            'set_voxel_masks_tensor_shift_0', 
+            'set_voxel_masks_tensor_shift_1',
+            'pos_embed_tensor'
+        ]
+        output_names = ["output",]
+        trt_path = self.model_cfg.trt_engine
+        self.allptransblockstrt = TRTWrapper(trt_path, input_names, output_names)
+        
+        self.num_shifts = [2] * stage_num
+        self.output_shape = self.model_cfg.output_shape
+        self.stage_num = stage_num
+        self.set_info = set_info
+        self.num_point_features = self.model_cfg.conv_out_channel
+
+
+    def forward(self, batch_dict):
+
+        voxel_info = self.input_layer(batch_dict)
+
+        voxel_feat = voxel_info['voxel_feats_stage0']
+        set_voxel_inds_list = [[voxel_info[f'set_voxel_inds_stage{s}_shift{i}'] for i in range(self.num_shifts[s])] for s in range(self.stage_num)]
+        set_voxel_masks_list = [[voxel_info[f'set_voxel_mask_stage{s}_shift{i}'] for i in range(self.num_shifts[s])] for s in range(self.stage_num)]
+        pos_embed_list = [[[voxel_info[f'pos_embed_stage{s}_block{b}_shift{i}'] for i in range(self.num_shifts[s])] for b in range(self.set_info[s][1])] for s in range(self.stage_num)]
+        pooling_mapping_index = [voxel_info[f'pooling_mapping_index_stage{s+1}'] for s in range(self.stage_num-1)]
+        pooling_index_in_pool = [voxel_info[f'pooling_index_in_pool_stage{s+1}'] for s in range(self.stage_num-1)]
+        pooling_preholder_feats = [voxel_info[f'pooling_preholder_feats_stage{s+1}'] for s in range(self.stage_num-1)]
+
+        output = voxel_feat
+        inputs_dict = dict(
+                src=output,
+                set_voxel_inds_tensor_shift_0=set_voxel_inds_list[0][0].int(),
+                set_voxel_inds_tensor_shift_1=set_voxel_inds_list[0][1].int(),
+                set_voxel_masks_tensor_shift_0=set_voxel_masks_list[0][0],
+                set_voxel_masks_tensor_shift_1=set_voxel_masks_list[0][1],
+                pos_embed_tensor=torch.stack([torch.stack(v, dim=0) for v in pos_embed_list[0]], dim=0),
+            )
+        output = self.allptransblockstrt(inputs_dict)["output"]
+
+        batch_dict['pillar_features'] = batch_dict['voxel_features'] = output
+        return batch_dict
+
+    def _reset_parameters(self):
+        for name, p in self.named_parameters():
+            if p.dim() > 1 and 'scaler' not in name:
+                nn.init.xavier_uniform_(p)

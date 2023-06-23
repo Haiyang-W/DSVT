@@ -4,8 +4,7 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsvt-dynamic-sparse-voxel-transformer-with/3d-object-detection-on-nuscenes-lidar-only)](https://paperswithcode.com/sota/3d-object-detection-on-nuscenes-lidar-only?p=dsvt-dynamic-sparse-voxel-transformer-with)
 
 
-[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) ![visitors](https://visitor-badge.glitch.me/badge?page_id=Haiyang-W/DSVT) [![citation](https://img.shields.io/badge/dynamic/json?label=citation&query=citationCount&url=https%3A%2F%2Fapi.semanticscholar.org%2Fgraph%2Fv1%2Fpaper%2F7a0a7f47c1614b813e35e15a2c0c0a488ee5e0aa%3Ffields%3DcitationCount)](https://www.semanticscholar.org/paper/DSVT%3A-Dynamic-Sparse-Voxel-Transformer-with-Rotated-Wang-Shi/7a0a7f47c1614b813e35e15a2c0c0a488ee5e0aa)
-
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) 
 
 # DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 	
@@ -26,9 +25,10 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 
 ## News
 - [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
-- [23-02-28] 🔥 DSVT is accepted at CVPR 2023.
+- [23-02-28] 🔥 DSVT is accepted at [CVPR 2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf).
 - [23-03-30] Code of Waymo is released.
 - [23-06-03] Code of NuScenes is released.
+- [23-06-23] Code of Deployment is released.
 
 ## TODO
 
@@ -36,6 +36,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [x] SOTA performance of 3D object detection (Waymo & Nuscenes) and BEV Map Segmentation (Nuscenes).
 - [x] Clean up and release the code of Waymo.
 - [x] Release code of NuScenes.
+- [x] Release code of Deployment.
 - [ ] Release the Waymo Multi-Frames Configs.
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
@@ -85,9 +86,9 @@ We run training for 3 times and report average metrics across all results. Regre
 
 
 ### 3D Object Detection (on NuScenes validation)
-|  Model  | mAP | NDS | mATE | mASE | mAOE | mAVE| mAAE | ckpt |
-|---------|---------|--------|---------|---------|--------|---------|--------|--------|
-|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_nusences.yaml) | 66.4 | 71.1 | 27.0 | 24.8 | 27.2 | 22.6 | 18.9| [ckpt](https://drive.google.com/file/d/10d7c-uJxg5w4GN-JmRBQi4gQDwHiOHxP/view?usp=drive_link)|
+|  Model  | mAP | NDS | mATE | mASE | mAOE | mAVE| mAAE | ckpt | Log |
+|---------|---------|--------|---------|---------|--------|---------|--------|--------|--------|
+|  [DSVT(Pillar)](tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_nusences.yaml) | 66.4 | 71.1 | 27.0 | 24.8 | 27.2 | 22.6 | 18.9| [ckpt](https://drive.google.com/file/d/10d7c-uJxg5w4GN-JmRBQi4gQDwHiOHxP/view?usp=drive_link)| [Log](https://drive.google.com/file/d/1xAQgcT8Ld0-qL9z1KD_khWXuukpoBBo9/view?usp=drive_link)|
 
 
 ### 3D Object Detection (on NuScenes test)
@@ -174,6 +175,29 @@ bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_D512e.yaml
 # example DSVT-P@fp32 ~22.5h on NVIDIA A100
 cd tools
 bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage.yaml.yaml --sync_bn --logger_iter_interval 500
+```
+
+## TensorRT Deployment
+We privide deployment details of DSVT, including converting torch_model to onnx_model and creating trt_engine from onnx_model. The deployment of the backbone2d and centerhead can be performed in a similar manner.
+
+The code has been tested on Ubuntu18.04, with following libraries:
+* Python = 3.8
+* torch = 1.13.1
+* onnx = 1.12.0 (pip install)
+* onnxruntime = 1.10.0 (pip install)
+* tensorrt = 8.5.1.7 
+
+We recommend install tensorrt from TAR Package, following [this](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar).
+1. Download the [input_data](https://drive.google.com/file/d/1AimmC2Fc-40AyK-xM1D_fGV09uXrrsgS/view?usp=drive_link) and specify the input_data_path and ckpt_path in [code](./tools/deploy.py). Then run the following command to create trt_engine:
+```
+cd tools
+python deploy.py
+```
+The trt_engine will be saved in tools/deploy_files/dsvt.onnx, or you can directly download form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
+
+2. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
+```
+bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
 
 ## Possible Issues
