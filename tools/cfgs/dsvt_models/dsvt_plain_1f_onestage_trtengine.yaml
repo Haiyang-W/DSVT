@@ -81,7 +81,7 @@ MODEL:
       shifts_list: [[[0, 0, 0], [6, 6, 0]]]
       normalize_pos: False
 
-    trt_engine: /slurm_data/shichen/package/tomopc/DSVT/tools/deploy_files/dsvt.engine
+    trt_engine: path to trt_engine
     block_name: ['DSVTBlock']
     set_info: [[36, 4]]
     d_model: [192]
