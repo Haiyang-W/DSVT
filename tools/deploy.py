@@ -61,13 +61,13 @@ class AllDSVTBlocksTRT(nn.Module):
         set_voxel_inds = set_voxel_inds_tensor_shift_0[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_0[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         set_id = 1
         set_voxel_inds = set_voxel_inds_tensor_shift_0[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_0[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         
         outputs = self.layer_norms_list[blc_id](residual + outputs)
@@ -78,13 +78,13 @@ class AllDSVTBlocksTRT(nn.Module):
         set_voxel_inds = set_voxel_inds_tensor_shift_1[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_1[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         set_id = 1
         set_voxel_inds = set_voxel_inds_tensor_shift_1[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_1[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         
         outputs = self.layer_norms_list[blc_id](residual + outputs)
@@ -95,13 +95,13 @@ class AllDSVTBlocksTRT(nn.Module):
         set_voxel_inds = set_voxel_inds_tensor_shift_0[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_0[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         set_id = 1
         set_voxel_inds = set_voxel_inds_tensor_shift_0[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_0[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         
         outputs = self.layer_norms_list[blc_id](residual + outputs)
@@ -112,13 +112,13 @@ class AllDSVTBlocksTRT(nn.Module):
         set_voxel_inds = set_voxel_inds_tensor_shift_1[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_1[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         set_id = 1
         set_voxel_inds = set_voxel_inds_tensor_shift_1[set_id:set_id+1].squeeze(0)
         set_voxel_masks = set_voxel_masks_tensor_shift_1[set_id:set_id+1].squeeze(0)
         pos_embed = pos_embed_tensor[blc_id:blc_id+1, set_id:set_id+1].squeeze(0).squeeze(0)
-        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed,)
+        inputs = (outputs, set_voxel_inds, set_voxel_masks, pos_embed, True)
         outputs = self.dsvtblocks_list[blc_id].encoder_list[set_id](*inputs)
         
         outputs = self.layer_norms_list[blc_id](residual + outputs)

@@ -196,9 +196,9 @@ class DSVT_EncoderLayer(nn.Module):
         self.norm = nn.LayerNorm(d_model)
         self.d_model = d_model
 
-    def forward(self,src,set_voxel_inds,set_voxel_masks,pos=None):
+    def forward(self,src,set_voxel_inds,set_voxel_masks,pos=None,onnx_export=False):
         identity = src
-        src = self.win_attn(src, pos, set_voxel_masks, set_voxel_inds)
+        src = self.win_attn(src, pos, set_voxel_masks, set_voxel_inds, onnx_export)
         src = src + identity
         src = self.norm(src)
 
@@ -226,13 +226,14 @@ class SetAttention(nn.Module):
 
         self.activation = _get_activation_fn(activation)
 
-    def forward(self, src, pos=None, key_padding_mask=None, voxel_inds=None):
+    def forward(self, src, pos=None, key_padding_mask=None, voxel_inds=None, onnx_export=False):
         '''
         Args:
             src (Tensor[float]): Voxel features with shape (N, C), where N is the number of voxels.
             pos (Tensor[float]): Position embedding vectors with shape (N, C).
             key_padding_mask (Tensor[bool]): Mask for redundant voxels within set. Shape of (set_num, set_size).
             voxel_inds (Tensor[int]): Voxel indexs for each set. Shape of (set_num, set_size).
+            onnx_export (bool): Substitute torch.unique op, which is not supported by tensorrt.
         Returns:
             src (Tensor[float]): Voxel features.
         '''
@@ -253,14 +254,16 @@ class SetAttention(nn.Module):
 
         # map voxel featurs from set space to voxel space: (set_num, set_size, C) --> (N, C)
         flatten_inds = voxel_inds.reshape(-1)
-        # unique_flatten_inds, inverse = torch.unique(flatten_inds, return_inverse=True)
-        # perm = torch.arange(inverse.size(0), dtype=inverse.dtype, device=inverse.device)
-        # inverse, perm = inverse.flip([0]), perm.flip([0])
-        # perm = inverse.new_empty(unique_flatten_inds.size(0)).scatter_(0, inverse, perm)
-        # src2 = src2.reshape(-1, self.d_model)[perm]
-        src2_placeholder = torch.zeros_like(src).to(src2.dtype)
-        src2_placeholder[flatten_inds] = src2.reshape(-1, self.d_model)
-        src2 = src2_placeholder
+        if onnx_export:
+            src2_placeholder = torch.zeros_like(src).to(src2.dtype)
+            src2_placeholder[flatten_inds] = src2.reshape(-1, self.d_model)
+            src2 = src2_placeholder
+        else:
+            unique_flatten_inds, inverse = torch.unique(flatten_inds, return_inverse=True)
+            perm = torch.arange(inverse.size(0), dtype=inverse.dtype, device=inverse.device)
+            inverse, perm = inverse.flip([0]), perm.flip([0])
+            perm = inverse.new_empty(unique_flatten_inds.size(0)).scatter_(0, inverse, perm)
+            src2 = src2.reshape(-1, self.d_model)[perm]
 
         # FFN layer
         src = src + self.dropout1(src2)
