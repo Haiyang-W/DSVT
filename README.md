@@ -3,8 +3,7 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsvt-dynamic-sparse-voxel-transformer-with/3d-object-detection-on-waymo-cyclist)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-cyclist?p=dsvt-dynamic-sparse-voxel-transformer-with)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/dsvt-dynamic-sparse-voxel-transformer-with/3d-object-detection-on-nuscenes-lidar-only)](https://paperswithcode.com/sota/3d-object-detection-on-nuscenes-lidar-only?p=dsvt-dynamic-sparse-voxel-transformer-with)
 
-
-[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) 
+[![CVF](https://img.shields.io/badge/CVF-CVPR'2023-blue.svg)](https://openaccess.thecvf.com/content/CVPR2023/html/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.html) [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) 
 
 # DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 	
@@ -12,7 +11,7 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-cyclist)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-cyclist?p=embracing-single-stride-3d-object-detector)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-vehicle)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-vehicle?p=embracing-single-stride-3d-object-detector) -->
 
-This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](https://arxiv.org/abs/2301.06051) as well as the follow-ups. Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
+This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf) as well as the follow-ups. Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
 
 > DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 >
@@ -28,7 +27,17 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [23-02-28] 🔥 DSVT is accepted at [CVPR 2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf).
 - [23-03-30] Code of Waymo is released.
 - [23-06-03] Code of NuScenes is released.
-- [23-06-23] Code of Deployment is released.
+- [23-06-23] 🔥 Code of Deployment is released.
+
+## Overview
+- [Todo](https://github.com/Haiyang-W/DSVT#todo)
+- [Introduction](https://github.com/Haiyang-W/DSVT#introduction)
+- [Main Results](https://github.com/Haiyang-W/DSVT#main-results)
+- [Installation](https://github.com/Haiyang-W/DSVT#installation)
+- [Quick Start](https://github.com/Haiyang-W/DSVT#quick-start)
+- [TensorRT Deployment](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)
+- [Possible Issues](https://github.com/Haiyang-W/DSVT#possible-issues)
+- [Citation](https://github.com/Haiyang-W/DSVT#citation)
 
 ## TODO
 
@@ -37,8 +46,8 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [x] Clean up and release the code of Waymo.
 - [x] Release code of NuScenes.
 - [x] Release code of Deployment.
-- [ ] Release the Waymo Multi-Frames Configs.
 - [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
+- [ ] Release the Waymo Multi-Frames Configs.
 
 ## Introduction
 Dynamic Sparse Voxel Transformer is an efficient yet deployment-friendly 3D transformer backbone for outdoor 3D object detection. It partitions a series of local regions in each window according to its sparsity and then computes the features of all regions in a fully parallel manner. Moreover, to allow the cross-set connection, it designs a rotated set partitioning strategy that alternates between two partitioning configurations in consecutive self-attention layers.
@@ -101,11 +110,13 @@ We run training for 3 times and report average metrics across all results. Regre
 |---------|----------|--------|--------|--------|--------|---------|--------|
 |  DSVT(Pillar) |   87.6   |   67.2   |   72.7   |   59.7   |   62.7  |   58.2   |   68.0   |
 
-#### Inference Speed
-We present a comparison with other state-of-the-art methods on both inference speed and performance accuracy. **After being deployed by NVIDIA TensorRT, our model can achieve a real-time running speed (27Hz).** 
+### What's new here?
+#### 🔥 Deployment-friendly and fast inference speed
+We present a comparison with other state-of-the-art methods on both inference speed and performance accuracy. **After being deployed by NVIDIA TensorRT, our model can achieve a real-time running speed (27Hz).** We hope that DSVT can lead the wave of point cloud sparse network design, replacing Sparse Convolution and enabling the deployment of sparse networks in real-world applications.
 
-![Speed](assets/Figure1_arxiv.png)
-
+<div align="left">
+  <img src="assets/Figure1_arxiv.png" width="600"/>
+</div>
 
 |  Model  |  Latency |  mAP_L2  | mAPH_L2 | 
 |---------|---------|---------|--------|
@@ -115,6 +126,20 @@ We present a comparison with other state-of-the-art methods on both inference sp
 |  DSVT(Pillar) | 67ms       |  73.2   |  71.0  |  
 |  DSVT(Voxel) | 97ms       |  74.0   |  72.1  |
 |  DSVT(Pillar+TensorRt) | 37ms       |  73.2   |  71.0  |  
+
+#### 🔥 Beats previous SOTAs of outdoor 3D Object Detection and BEV Segmentation
+Our approach has achieved the best performance on multiple datasets (e.g., Waymo and Nuscenes) and tasks (e.g., 3D Object Detection and BEV Map Segmentation), and it is highly versatile, requiring only the replacement of the backbone.
+<div align="left">
+  <img src="assets/Figure4.png" width="700"/>
+</div>
+
+#### 🔥 More powerful than Spase Convolution
+Thanks to the large receptive field of Transformer, our DSVT-P brings +1.78 L2 mAPH gains over sparse convolution with a slightly larger latency. Due to the characteristic of friendly deployment (SpConv cannot be easily deployed), our model can achieve 2x faster by TensorRT acceleration. 
+<div align="left">
+  <img src="assets/Figure5.png" width="500"/>
+</div>
+
+See our [paper](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf) for more analysis, discussions, and evaluations.
 
 
 ## Usage
@@ -180,6 +205,8 @@ bash scripts/dist_train.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestag
 ## TensorRT Deployment
 We privide deployment details of DSVT, including converting torch_model to onnx_model and creating trt_engine from onnx_model. The deployment of the backbone2d and centerhead can be performed in a similar manner.
 
+Notably, for the sake of universality, we offer partial deployment only for backbone3D, specifically referring to the deployment of DSVT. The head and backbone2D can be deployed in a similar fashion. The speeds provided in the paper are the results of full deployment.
+
 The code has been tested on Ubuntu18.04, with following libraries:
 * Python = 3.8
 * torch = 1.13.1
@@ -195,18 +222,19 @@ python deploy.py
 ```
 The trt_engine will be saved in tools/deploy_files/dsvt.onnx, or you can directly download form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
 
-2. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
+1. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
 ```
 bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
 
 ## Possible Issues
-* If you are limited by computation resource, please try to reduce the batch size and adopt fp16 training schemes.
+* If you are limited by computation resource, please try to reduce the batch size and featdim(192->128), adopt fp16 training schemes or use [torch checkpoints](https://pytorch.org/docs/stable/checkpoint.html), which will save a lot of CUDA memory, (e.g., fp16:~30%, torchcheckpoints:~50%, featdimReduction:~20%).
 * If your memory is limited, please turn off the [USE_SHARED_MEMORY](https://github.com/Haiyang-W/DSVT/blob/d215f68f3846e1f7afe3add7154be730a12a02b4/tools/cfgs/dsvt_models/dsvt_plain_D512e.yaml#L15).
 * If your training process takes up a lot of memory and the program starts slowly, please reduce the numba version to 0.48, as mentioned in [INSTALL.md](docs/INSTALL.md).
 * If you encounter a gradient that becomes NaN during fp16 training, don't worry, it's normal. You can try a few more times.
 * If you couldn’t find a solution, search open and closed issues in our github issues page [here](https://github.com/Haiyang-W/DSVT/issues).
 * If still no-luck, open a new issue in our github. Our turnaround is usually a couple of days.
+
 
 ## Citation
 Please consider citing our work as follows if it is helpful.
