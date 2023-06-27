@@ -222,7 +222,7 @@ python deploy.py
 ```
 The trt_engine will be saved in tools/deploy_files/dsvt.onnx, or you can directly download form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
 
-1. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
+2. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
 ```
 bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
