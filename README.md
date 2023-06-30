@@ -28,6 +28,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [23-03-30] Code of Waymo is released.
 - [23-06-03] Code of NuScenes is released.
 - [23-06-23] 🔥 Code of Deployment is released.
+- [23-06-30] 🔥 DSVT (Waymo) has been merged to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/waymo_models/dsvt_pillar.yaml).
 
 ## Overview
 - [Todo](https://github.com/Haiyang-W/DSVT#todo)
@@ -46,7 +47,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [x] Clean up and release the code of Waymo.
 - [x] Release code of NuScenes.
 - [x] Release code of Deployment.
-- [ ] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
+- [x] Merge DSVT to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 - [ ] Release the Waymo Multi-Frames Configs.
 
 ## Introduction
