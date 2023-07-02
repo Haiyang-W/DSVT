@@ -230,6 +230,7 @@ bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage
 
 ## Possible Issues
 * If you are limited by computation resource, please try to reduce the batch size and featdim(192->128), adopt fp16 training schemes or use [torch checkpoints](https://pytorch.org/docs/stable/checkpoint.html), which will save a lot of CUDA memory, (e.g., fp16:~30%, torchcheckpoints:~50%, featdimReduction:~20%).
+* If you encounter CUDA memory limitations, we recommond enabling the torch checkpoints in the [config](tools/cfgs/dsvt_models/dsvt_3D_1f_onestage.yaml#L93), which will reduce about 50% memory consumption.
 * If your memory is limited, please turn off the [USE_SHARED_MEMORY](https://github.com/Haiyang-W/DSVT/blob/d215f68f3846e1f7afe3add7154be730a12a02b4/tools/cfgs/dsvt_models/dsvt_plain_D512e.yaml#L15).
 * If your training process takes up a lot of memory and the program starts slowly, please reduce the numba version to 0.48, as mentioned in [INSTALL.md](docs/INSTALL.md).
 * If you encounter a gradient that becomes NaN during fp16 training, don't worry, it's normal. You can try a few more times.

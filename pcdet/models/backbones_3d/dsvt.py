@@ -37,6 +37,8 @@ class DSVT(nn.Module):
         dropout = self.model_cfg.dropout
         activation = self.model_cfg.activation
         self.reduction_type = self.model_cfg.get('reduction_type', 'attention')
+        # save GPU memory
+        self.use_torch_ckpt = self.model_cfg.get('ues_checkpoint', False)
  
         # Sparse Regional Attention Blocks
         stage_num = len(block_name)
@@ -117,8 +119,11 @@ class DSVT(nn.Module):
             for i in range(len(block_layers)):
                 block = block_layers[i]
                 residual = output.clone()
-                output = block(output, set_voxel_inds_list[stage_id], set_voxel_masks_list[stage_id], pos_embed_list[stage_id][i], \
-                               block_id=block_id)
+                if self.use_torch_ckpt==False:
+                    output = block(output, set_voxel_inds_list[stage_id], set_voxel_masks_list[stage_id], pos_embed_list[stage_id][i], \
+                                block_id=block_id)
+                else:
+                    output = checkpoint(block, output, set_voxel_inds_list[stage_id], set_voxel_masks_list[stage_id], pos_embed_list[stage_id][i], block_id)
                 output = residual_norm_layers[i](output + residual)
                 block_id += 1
             if stage_id < self.stage_num - 1:
