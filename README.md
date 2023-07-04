@@ -5,13 +5,13 @@
 
 [![CVF](https://img.shields.io/badge/CVF-CVPR'2023-blue.svg)](https://openaccess.thecvf.com/content/CVPR2023/html/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.html) [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2301.06051) [![GitHub Stars](https://img.shields.io/github/stars/Haiyang-W/DSVT?style=social)](https://github.com/Haiyang-W/DSVT) 
 
-# DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
+# DSVT: an efficient and deployment-friendly sparse backbone for large-scale point clouds
 	
 <!-- [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-pedestrian)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-pedestrian?p=embracing-single-stride-3d-object-detector)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-cyclist)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-cyclist?p=embracing-single-stride-3d-object-detector)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/embracing-single-stride-3d-object-detector/3d-object-detection-on-waymo-vehicle)](https://paperswithcode.com/sota/3d-object-detection-on-waymo-vehicle?p=embracing-single-stride-3d-object-detector) -->
 
-This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf) as well as the follow-ups. Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz).
+This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf) as well as the follow-ups. Our DSVT achieves state-of-the-art performance on large-scale Waymo Open Dataset with real-time inference speed (27Hz). We have made every effort to ensure that the codebase is clean, concise, easily readable, state-of-the-art, and relies only on minimal dependencies.
 
 > DSVT: Dynamic Sparse Voxel Transformer with Rotated Sets
 >
@@ -25,8 +25,8 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 ## News
 - [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
 - [23-02-28] 🔥 DSVT is accepted at [CVPR 2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf).
-- [23-03-30] Code of Waymo is released.
-- [23-06-03] Code of NuScenes is released.
+- [23-03-30] Code of Waymo is released (SOTA).
+- [23-06-03] Code of NuScenes is released (SOTA).
 - [23-06-23] 🔥 Code of Deployment is released.
 - [23-06-30] 🔥 DSVT (Waymo) has been merged to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/waymo_models/dsvt_pillar.yaml).
 
@@ -39,6 +39,7 @@ This repo is the official implementation of: [DSVT: Dynamic Sparse Voxel Transfo
 - [TensorRT Deployment](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)
 - [Possible Issues](https://github.com/Haiyang-W/DSVT#possible-issues)
 - [Citation](https://github.com/Haiyang-W/DSVT#citation)
+- [Potential Research](https://github.com/Haiyang-W/DSVT#potential-research)
 
 ## TODO
 
@@ -248,6 +249,12 @@ Please consider citing our work as follows if it is helpful.
     year={2023}
 }
 ```
+
+## Potential Research 
+* The input layer of DSVT efficiently performs voxel partitioning in advance, and the inference time for this part does not increase as the network size grows. We have already made good optimizations for this step, but it still consumes a considerable amount of time. It is possible to try writing CUDA code or fully caching the position embedding to further accelerate the process.
+* Our DSVT-3D dynamic partition takes a considerable amount of time due to the inability to inherit partition results between stages. To accelerate the inference time of the 3D hierarchical network for real 3D scenes, such as indoor scenes, it is possible to design different stage inheritance strategies.
+
+Welcome to join in designing data processing networks of 3D Vision that are truly useful in the industry, and feel free to contact us for any potential contributions.
 
 ## Acknowledgments
 DSVT uses code from a few open source repositories. Without the efforts of these folks (and their willingness to release their implementations), DSVT would not be possible. We thanks these authors for their efforts!
