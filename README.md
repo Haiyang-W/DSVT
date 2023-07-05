@@ -220,9 +220,20 @@ We recommend install tensorrt from TAR Package, following [this](https://docs.nv
 1. Download the [input_data](https://drive.google.com/file/d/1AimmC2Fc-40AyK-xM1D_fGV09uXrrsgS/view?usp=drive_link) and specify the input_data_path and ckpt_path in [code](./tools/deploy.py). Then run the following command to create trt_engine:
 ```
 cd tools
+
+# torch convert to onnx
 python deploy.py
+
+# onnx convert to TRT engine
+trtexec --onnx={path to onnx} --saveEngine={path to save trtengine} \
+--memPoolSize=workspace:4096 --verbose --buildOnly --device=1 --fp16 \
+--tacticSources=+CUDNN,+CUBLAS,-CUBLAS_LT,+EDGE_MASK_CONVOLUTIONS \
+--minShapes=src:1000x192,set_voxel_inds_tensor_shift_0:2x50x36,set_voxel_inds_tensor_shift_1:2x50x36,set_voxel_masks_tensor_shift_0:2x50x36,set_voxel_masks_tensor_shift_1:2x50x36,pos_embed_tensor:4x2x1000x192 \
+--optShapes=src:24629x192,set_voxel_inds_tensor_shift_0:2x1156x36,set_voxel_inds_tensor_shift_1:2x834x36,set_voxel_masks_tensor_shift_0:2x1156x36,set_voxel_masks_tensor_shift_1:2x834x36,pos_embed_tensor:4x2x24629x192 \
+--maxShapes=src:100000x192,set_voxel_inds_tensor_shift_0:2x5000x36,set_voxel_inds_tensor_shift_1:2x3200x36,set_voxel_masks_tensor_shift_0:2x5000x36,set_voxel_masks_tensor_shift_1:2x3200x36,pos_embed_tensor:4x2x100000x192 \
+> debug.log 2>&1
 ```
-The trt_engine will be saved in tools/deploy_files/dsvt.onnx, or you can directly download form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
+The onnx file and trt_engine will be saved in tools/deploy_files/, or you can directly download engine form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
 
 2. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
 ```
