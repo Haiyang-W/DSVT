@@ -235,7 +235,7 @@ trtexec --onnx=./deploy_files/dsvt.onnx  --saveEngine=./deploy_files/dsvt.engine
 ```
 The onnx file and trt_engine will be saved in tools/deploy_files/, or you can directly download engine form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
 
-1. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84). (e.g., ./deploy_files/dsvt.engine)
+2. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84). (e.g., ./deploy_files/dsvt.engine)
 ```
 bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
