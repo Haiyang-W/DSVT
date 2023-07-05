@@ -217,7 +217,7 @@ The code has been tested on Ubuntu18.04, with following libraries:
 * tensorrt = 8.5.1.7 
 
 We recommend install tensorrt from TAR Package, following [this](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar).
-1. Download the [input_data](https://drive.google.com/file/d/1AimmC2Fc-40AyK-xM1D_fGV09uXrrsgS/view?usp=drive_link) and specify the input_data_path and ckpt_path in [code](./tools/deploy.py). Then run the following command to create trt_engine:
+1. Download the [input_data](https://drive.google.com/file/d/1AimmC2Fc-40AyK-xM1D_fGV09uXrrsgS/view?usp=drive_link) and specify the [input_data_path](https://github.com/Haiyang-W/DSVT/blob/d48110954dd081e241fa5f09cefa3c84abb822aa/tools/deploy.py#L37) and [ckpt_path](https://github.com/Haiyang-W/DSVT/blob/d48110954dd081e241fa5f09cefa3c84abb822aa/tools/deploy.py#L30) in [code](./tools/deploy.py). Then run the following command to create trt_engine:
 ```
 cd tools
 
@@ -225,7 +225,7 @@ cd tools
 python deploy.py
 
 # onnx convert to TRT engine
-trtexec --onnx={path to onnx} --saveEngine={path to save trtengine} \
+trtexec --onnx=./deploy_files/dsvt.onnx  --saveEngine=./deploy_files/dsvt.engine \
 --memPoolSize=workspace:4096 --verbose --buildOnly --device=1 --fp16 \
 --tacticSources=+CUDNN,+CUBLAS,-CUBLAS_LT,+EDGE_MASK_CONVOLUTIONS \
 --minShapes=src:1000x192,set_voxel_inds_tensor_shift_0:2x50x36,set_voxel_inds_tensor_shift_1:2x50x36,set_voxel_masks_tensor_shift_0:2x50x36,set_voxel_masks_tensor_shift_1:2x50x36,pos_embed_tensor:4x2x1000x192 \
@@ -235,7 +235,7 @@ trtexec --onnx={path to onnx} --saveEngine={path to save trtengine} \
 ```
 The onnx file and trt_engine will be saved in tools/deploy_files/, or you can directly download engine form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
 
-2. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84).
+1. Testing with trt_engine, you need specify the trt_engine path in [config](./tools/cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml#L84). (e.g., ./deploy_files/dsvt.engine)
 ```
 bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
