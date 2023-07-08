@@ -214,6 +214,8 @@ The code has been tested on Ubuntu18.04, with following libraries:
 * torch = 1.13.1
 * onnx = 1.12.0 (pip install)
 * onnxruntime = 1.10.0 (pip install)
+* cuda = 11.1
+* cudnn = 8.6.0
 * tensorrt = 8.5.1.7 
 
 We recommend install tensorrt from TAR Package, following [this](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-tar).
@@ -239,6 +241,9 @@ The onnx file and trt_engine will be saved in tools/deploy_files/, or you can di
 ```
 bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
+
+3. After deployed with TensorRT, the runtime of DSVT (excluding the InputLayer) on a signle RTX3090 GPU significantly reduces from 36.0ms to 13.8ms, leading to an almost twofold increase in speed.
+
 
 ## Possible Issues
 * If you are limited by computation resource, please try to reduce the batch size and featdim(192->128), adopt fp16 training schemes or use [torch checkpoints](https://pytorch.org/docs/stable/checkpoint.html), which will save a lot of CUDA memory, (e.g., fp16:~30%, torchcheckpoints:~50%, featdimReduction:~20%).
