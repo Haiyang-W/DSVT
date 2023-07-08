@@ -228,9 +228,9 @@ python deploy.py
 trtexec --onnx=./deploy_files/dsvt.onnx  --saveEngine=./deploy_files/dsvt.engine \
 --memPoolSize=workspace:4096 --verbose --buildOnly --device=1 --fp16 \
 --tacticSources=+CUDNN,+CUBLAS,-CUBLAS_LT,+EDGE_MASK_CONVOLUTIONS \
---minShapes=src:1000x192,set_voxel_inds_tensor_shift_0:2x50x36,set_voxel_inds_tensor_shift_1:2x50x36,set_voxel_masks_tensor_shift_0:2x50x36,set_voxel_masks_tensor_shift_1:2x50x36,pos_embed_tensor:4x2x1000x192 \
---optShapes=src:24629x192,set_voxel_inds_tensor_shift_0:2x1156x36,set_voxel_inds_tensor_shift_1:2x834x36,set_voxel_masks_tensor_shift_0:2x1156x36,set_voxel_masks_tensor_shift_1:2x834x36,pos_embed_tensor:4x2x24629x192 \
---maxShapes=src:100000x192,set_voxel_inds_tensor_shift_0:2x5000x36,set_voxel_inds_tensor_shift_1:2x3200x36,set_voxel_masks_tensor_shift_0:2x5000x36,set_voxel_masks_tensor_shift_1:2x3200x36,pos_embed_tensor:4x2x100000x192 \
+--minShapes=src:3000x192,set_voxel_inds_tensor_shift_0:2x170x36,set_voxel_inds_tensor_shift_1:2x100x36,set_voxel_masks_tensor_shift_0:2x170x36,set_voxel_masks_tensor_shift_1:2x100x36,pos_embed_tensor:4x2x3000x192 \
+--optShapes=src:20000x192,set_voxel_inds_tensor_shift_0:2x1000x36,set_voxel_inds_tensor_shift_1:2x700x36,set_voxel_masks_tensor_shift_0:2x1000x36,set_voxel_masks_tensor_shift_1:2x700x36,pos_embed_tensor:4x2x20000x192 \
+--maxShapes=src:35000x192,set_voxel_inds_tensor_shift_0:2x1500x36,set_voxel_inds_tensor_shift_1:2x1200x36,set_voxel_masks_tensor_shift_0:2x1500x36,set_voxel_masks_tensor_shift_1:2x1200x36,pos_embed_tensor:4x2x35000x192 \
 > debug.log 2>&1
 ```
 The onnx file and trt_engine will be saved in tools/deploy_files/, or you can directly download engine form [here](https://drive.google.com/file/d/1BRC1CSOypMYTV67agU14yXGXkxll5lYH/view?usp=drive_link).
