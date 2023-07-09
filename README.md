@@ -29,6 +29,7 @@ This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Vo
 - [23-06-03] Code of NuScenes is released (SOTA).
 - [23-06-23] 🔥 Code of Deployment is released.
 - [23-06-30] 🔥 DSVT (Waymo) has been merged to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/waymo_models/dsvt_pillar.yaml).
+- [23-07-09] Bugfixed: The bug of wrong dynamic shape used in trtexec has been fixed (see [issue#43](https://github.com/Haiyang-W/DSVT/issues/43) and [deploy guidance](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)). Before: Pytorch(`36.0ms`) -> TRT-fp16(`32.9ms`), After: Pytorch(`36.0ms`) -> TRT-fp16(`13.8ms`) 
 
 ## Overview
 - [Todo](https://github.com/Haiyang-W/DSVT#todo)
@@ -242,7 +243,7 @@ The onnx file and trt_engine will be saved in tools/deploy_files/, or you can di
 bash scripts/dist_test.sh 8 --cfg_file ./cfgs/dsvt_models/dsvt_plain_1f_onestage_trtengine.yaml --ckpt <CHECKPOINT_FILE>
 ```
 
-3. After deployed with TensorRT, the runtime of DSVT (excluding the InputLayer) on a signle RTX3090 GPU significantly reduces from 36.0ms to 13.8ms, leading to an almost twofold increase in speed.
+3. After deployed with TensorRT, the runtime of DSVT (excluding the InputLayer) on a signle RTX3090 GPU significantly reduces from `36.0ms` to `13.8ms`, leading to an almost twofold increase in speed.
 
 
 ## Possible Issues
