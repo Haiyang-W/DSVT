@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.utils.checkpoint import checkpoint
 
 from .dsvt_input_layer import DSVTInputLayer
 from ..model_utils.tensorrt_utils.trtwrapper import TRTWrapper
