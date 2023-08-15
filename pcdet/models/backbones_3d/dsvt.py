@@ -180,6 +180,7 @@ class DSVTBlock(nn.Module):
     ):
         num_shifts = 2
         output = src
+        # TODO: bug to be fixed, mismatch of pos_embed
         for i in range(num_shifts):
             set_id = i
             shift_id = block_id % 2

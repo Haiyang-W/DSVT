@@ -71,6 +71,7 @@ MODEL:
   BACKBONE_3D:
     NAME: DSVT
     INPUT_LAYER:
+      # you need specify sparse_shape and window_shape carefully to ensure alignment with the settings of POINT_CLOUD_RANGE and VOXEL_SIZE
       sparse_shape: [468, 468, 32]
       downsample_stride: [[1, 1, 4], [1, 1, 4], [1, 1, 2]]
       d_model: [192, 192, 192, 192]
