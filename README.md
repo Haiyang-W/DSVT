@@ -31,6 +31,7 @@ This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Vo
 - [23-06-30] 🔥 DSVT (Waymo) has been merged to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/waymo_models/dsvt_pillar.yaml).
 - [23-07-09] Bugfixed: The bug of wrong dynamic shape used in trtexec has been fixed (see [issue#43](https://github.com/Haiyang-W/DSVT/issues/43) and [deploy guidance](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)). Before: Pytorch(`36.0ms`) -> TRT-fp16(`32.9ms`), After: Pytorch(`36.0ms`) -> TRT-fp16(`13.8ms`) 
 - [23-08-15] Bug Alert: We use incorrect position embeddings in DSVTBlock (see [issue#50](https://github.com/Haiyang-W/DSVT/issues/50)). 
+- [23-08-16] 🔥 [UniTR](https://arxiv.org/abs/2308.07732) has been accepted by [ICCV2023](https://iccv2023.thecvf.com/). It's the **First Unified Multi-Modal Transformer Backbone** for 3D perception and built upon our DSVT.
 
 ## Overview
 - [Todo](https://github.com/Haiyang-W/DSVT#todo)
