@@ -23,15 +23,15 @@ This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Vo
 </div>
 
 ## News
-- [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
-- [23-02-28] 🔥 DSVT is accepted at [CVPR 2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf).
-- [23-03-30] Code of Waymo is released (SOTA).
-- [23-06-03] Code of NuScenes is released (SOTA).
-- [23-06-23] 🔥 Code of Deployment is released.
-- [23-06-30] 🔥 DSVT (Waymo) has been merged to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/waymo_models/dsvt_pillar.yaml).
-- [23-07-09] Bugfixed: The bug of wrong dynamic shape used in trtexec has been fixed (see [issue#43](https://github.com/Haiyang-W/DSVT/issues/43) and [deploy guidance](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)). Before: Pytorch(`36.0ms`) -> TRT-fp16(`32.9ms`), After: Pytorch(`36.0ms`) -> TRT-fp16(`13.8ms`) 
+- [23-08-22] Thank [jingyue202205](https://github.com/jingyue202205) for his diligent efforts. DSVT is implemented using the TensorRT in an end-to-end manner, referring to [here](https://github.com/jingyue202205/DSVT-AI-TRT). 
 - [23-08-15] Bug Alert: We use incorrect position embeddings in DSVTBlock (see [issue#50](https://github.com/Haiyang-W/DSVT/issues/50)). 
-- [23-08-16] 🔥 [UniTR](https://arxiv.org/abs/2308.07732) has been accepted by [ICCV2023](https://iccv2023.thecvf.com/). It's the **First Unified Multi-Modal Transformer Backbone** for 3D perception and built upon our DSVT.
+- [23-07-09] Bugfixed: The bug of wrong dynamic shape used in trtexec has been fixed (see [issue#43](https://github.com/Haiyang-W/DSVT/issues/43) and [deploy guidance](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)). Before: Pytorch(`36.0ms`) -> TRT-fp16(`32.9ms`), After: Pytorch(`36.0ms`) -> TRT-fp16(`13.8ms`) 
+- [23-06-30] 🔥 DSVT (Waymo) has been merged to [OpenPCDet](https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/waymo_models/dsvt_pillar.yaml).
+- [23-06-23] 🔥 Code of Deployment is released.
+- [23-06-03] Code of NuScenes is released (SOTA).
+- [23-03-30] Code of Waymo is released (SOTA).
+- [23-02-28] 🔥 DSVT is accepted at [CVPR 2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_DSVT_Dynamic_Sparse_Voxel_Transformer_With_Rotated_Sets_CVPR_2023_paper.pdf).
+- [23-01-15] DSVT is released on [arXiv](https://arxiv.org/abs/2301.06051).
 
 ## Overview
 - [Todo](https://github.com/Haiyang-W/DSVT#todo)
