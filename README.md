@@ -23,6 +23,8 @@ This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Vo
 </div>
 
 ## News
+- [23-09-25] Code of UniTR has been released in [here](https://github.com/Haiyang-W/UniTR). 
+- [23-09-25] 🚀 [UniTR](https://arxiv.org/abs/2308.07732) has been accepted at ICCV2023, which is built upon DSVT. It's the first unified multi-modal transformer backbone for 3D perception. Hope it can be the `prerequisite for 3D Vision Foundation Model`. 
 - [23-08-22] Thank [jingyue202205](https://github.com/jingyue202205) for his diligent efforts. DSVT is implemented using the TensorRT in an end-to-end manner, referring to [here](https://github.com/jingyue202205/DSVT-AI-TRT). 
 - [23-08-15] Bug Alert: We use incorrect position embeddings in DSVTBlock (see [issue#50](https://github.com/Haiyang-W/DSVT/issues/50)). 
 - [23-07-09] Bugfixed: The bug of wrong dynamic shape used in trtexec has been fixed (see [issue#43](https://github.com/Haiyang-W/DSVT/issues/43) and [deploy guidance](https://github.com/Haiyang-W/DSVT#tensorrt-deployment)). Before: Pytorch(`36.0ms`) -> TRT-fp16(`32.9ms`), After: Pytorch(`36.0ms`) -> TRT-fp16(`13.8ms`) 
