@@ -23,6 +23,7 @@ This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Vo
 </div>
 
 ## News
+- [24-01-20] DSVT (Waymo) has been merged into the [mmdetection3d](https://github.com/open-mmlab/mmdetection3d/tree/main/projects/DSVT), thanks to the community's implementation.
 - [23-09-30] A few brief thoughts on potential research for the development of 3D perception. I would be delighted if they prove helpful for your research. Please refer [here](https://github.com/Haiyang-W/UniTR#potential-research).
 - [23-09-25] Code of UniTR has been released in [here](https://github.com/Haiyang-W/UniTR). 
 - [23-09-25] 🚀 [UniTR](https://arxiv.org/abs/2308.07732) has been accepted at ICCV2023, which is built upon DSVT. It's the first unified multi-modal transformer backbone for 3D perception. Hope it can be the `prerequisite for 3D Vision Foundation Model`. 
