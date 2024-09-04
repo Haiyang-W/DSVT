@@ -23,6 +23,7 @@ This repo is the official implementation of CVPR paper: [DSVT: Dynamic Sparse Vo
 </div>
 
 ## News
+- [24-08-12] 🔥 [GiT](https://github.com/Haiyang-W/GiT) was accepted by **ECCV2024** with **[Oral presentation](https://eccv2024.ecva.net/virtual/2024/events/oral)**. Hope you enjoy the success of **plain transformer family**.
 - [24-07-01] 🔥 Our [GiT](https://github.com/Haiyang-W/GiT) was accepted by **ECCV2024**. If you find it helpful, please give it a star. 🤗
 - [24-03-15] 🔥 [GiT](https://github.com/Haiyang-W/GiT), the first successful general vision model only using a ViT is released. Corresponding to [Potential Research](https://github.com/Haiyang-W/UniTR#potential-research), we attempted to address problems with the general model on the vision side. Combining DSVT, UniTR and GiT to construct an LLM-like unified model suitable for autonomous driving scenarios is an intriguing direction.
 - [24-01-20] DSVT (Waymo) has been merged into the [mmdetection3d](https://github.com/open-mmlab/mmdetection3d/tree/main/projects/DSVT), thanks to the community's implementation.
