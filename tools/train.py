@@ -74,7 +74,10 @@ def main():
             args.tcp_port, args.local_rank, backend='nccl'
         )
         dist_train = True
-
+        # Set GPU once and keep consistent
+        my_gpu = cfg.LOCAL_RANK % torch.cuda.device_count()
+        torch.cuda.set_device(my_gpu)
+    
     if args.batch_size is None:
         args.batch_size = cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU
     else:
@@ -98,7 +101,7 @@ def main():
     logger.info('**********************Start logging**********************')
     gpu_list = os.environ['CUDA_VISIBLE_DEVICES'] if 'CUDA_VISIBLE_DEVICES' in os.environ.keys() else 'ALL'
     logger.info('CUDA_VISIBLE_DEVICES=%s' % gpu_list)
-
+ 
     if dist_train:
         logger.info('total_batch_size: %d' % (total_gpus * args.batch_size))
     for key, val in vars(args).items():
@@ -155,7 +158,7 @@ def main():
 
     model.train()  # before wrap to DistributedDataParallel to support fixed some parameters
     if dist_train:
-        model = nn.parallel.DistributedDataParallel(model, device_ids=[cfg.LOCAL_RANK % torch.cuda.device_count()])
+        model = nn.parallel.DistributedDataParallel(model, device_ids=[my_gpu])
     logger.info(model)
     num_total_params = sum([x.numel() for x in model.parameters()])
     logger.info(f'Total number of parameters: {num_total_params}')
